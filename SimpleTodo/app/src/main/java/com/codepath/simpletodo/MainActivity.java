@@ -1,5 +1,7 @@
 package com.codepath.simpletodo;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
         readItems();
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
+
         setupListViewListener();
+
 
     }
 
@@ -79,6 +83,19 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+        lvItems.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Object obj = itemsAdapter.getItem(position);
+                        String name = obj.toString();
+                        Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
+                        intent.putExtra("item_name", name);
+                        startActivity(intent);
+
+                    }
+
+                });
     }
     private void readItems(){
         File filesDir = getFilesDir();
@@ -100,4 +117,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 }
