@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.apache.commons.io.FileUtils;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
+    private final int REQUEST_CODE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
+        etNewItem.setTag(itemsAdapter.getCount() - 1);
         writeItems();
 
     }
@@ -88,10 +94,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Object obj = itemsAdapter.getItem(position);
+                        //getView(position,view,parent);
                         String name = obj.toString();
                         Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
                         intent.putExtra("item_name", name);
-                        startActivity(intent);
+                        intent.putExtra("item_pos", position);
+                        startActivityForResult(intent, REQUEST_CODE);
 
                     }
 
@@ -116,6 +124,27 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Extract name value from result extras
+            String name = data.getExtras().getString("edited_item_name");
+            int item_position = data.getExtras().getInt("edited_item_pos");
+            int code = data.getExtras().getInt("code", 0);
+            // Toast the name to display temporarily on screen
+            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+            updateItemName(item_position, name);
+        }
+    }
+    public void updateItemName(int position, String item_name) {
+
+        TextView v = (TextView)lvItems.getChildAt(position);
+         v.setText(item_name);
+         items.add(position + 1, item_name);
+         items.remove(position);
+         writeItems();
     }
 
 }

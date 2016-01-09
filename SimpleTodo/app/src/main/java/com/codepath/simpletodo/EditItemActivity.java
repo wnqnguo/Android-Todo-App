@@ -1,16 +1,27 @@
 package com.codepath.simpletodo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class EditItemActivity extends AppCompatActivity {
-
+    EditText mEditText;
+    String mItemName;
+    int mItemPosition;
+    private final int REQUEST_CODE = 20;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
+        mItemName = getIntent().getStringExtra("item_name");
+        mItemPosition = getIntent().getIntExtra("item_pos", 0);
+        mEditText = (EditText)findViewById(R.id.item_name);
+        mEditText.setText(mItemName);
+
     }
 
     @Override
@@ -33,5 +44,13 @@ public class EditItemActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void saveNewItem(View v){
+        Intent i = new Intent(EditItemActivity.this, MainActivity.class);
+        String name = mEditText.getText().toString();
+        i.putExtra("edited_item_name", name); // pass arbitrary data to launched activity
+        i.putExtra("edited_item_pos",  mItemPosition);
+        setResult(RESULT_OK, i);
+        finish();
     }
 }
