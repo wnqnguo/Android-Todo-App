@@ -34,4 +34,7 @@
         android:layout_toLeftOf="@+id/btnAddItem"
         android:layout_toStartOf="@+id/btnAddItem"
         android:hint="Enter a new item" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 </RelativeLayout>

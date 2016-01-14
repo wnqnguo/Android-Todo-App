@@ -1,21 +1,20 @@
-package com.codepath.simpletodo;
+package com.codepath.simpletodo.Activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.codepath.simpletodo.R;
 
 import org.apache.commons.io.FileUtils;
 

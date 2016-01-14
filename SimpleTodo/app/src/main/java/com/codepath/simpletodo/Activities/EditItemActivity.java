@@ -1,4 +1,4 @@
-package com.codepath.simpletodo;
+package com.codepath.simpletodo.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.codepath.simpletodo.R;
 
 public class EditItemActivity extends AppCompatActivity {
     EditText mEditText;
