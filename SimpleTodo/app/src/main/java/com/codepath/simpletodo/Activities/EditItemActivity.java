@@ -3,6 +3,7 @@ package com.codepath.simpletodo.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ public class EditItemActivity extends AppCompatActivity {
     String mItemName;
     int mItemPosition;
     private final int REQUEST_CODE = 20;
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,9 @@ public class EditItemActivity extends AppCompatActivity {
         mItemPosition = getIntent().getIntExtra("item_pos", 0);
         mEditText = (EditText)findViewById(R.id.item_name);
         mEditText.setText(mItemName);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.codepath.simpletodo.Activities;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,21 +10,28 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.simpletodo.Models.List;
 import com.codepath.simpletodo.Models.Task;
 import com.codepath.simpletodo.R;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CreateNewList extends AppCompatActivity {
 
     private TextInputLayout inputLayoutTaskName;
     private EditText inputTaskName;
-    ArrayList<Task> Tasks;
+    private ArrayList<Task> tasks;
     ArrayAdapter<Task> tasksAdapter;
     ListView lvTasks;
     private final int REQUEST_CODE = 20;
@@ -39,6 +47,12 @@ public class CreateNewList extends AppCompatActivity {
         inputLayoutTaskName = (TextInputLayout) findViewById(R.id.input_layout_name);
         inputTaskName = (EditText) findViewById(R.id.input_name);
         inputTaskName.addTextChangedListener(new MyTextWatcher(inputTaskName));
+        lvTasks = (ListView) findViewById(R.id.lvTasks);
+        readItems();
+        tasks = new ArrayList<Task>();
+        tasksAdapter = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1,tasks);
+        lvTasks.setAdapter(tasksAdapter);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     @Override
@@ -82,4 +96,79 @@ public class CreateNewList extends AppCompatActivity {
             }
         }
     }
+    public void onAddTask(View v) {
+      //  EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+      //  String itemText = etNewItem.getText().toString();
+      //  tasksAdapter.add(itemText);
+     //   etNewItem.setText("");
+      //  etNewItem.setTag(tasksAdapter.getCount() - 1);
+        Intent intent = new Intent(CreateNewList.this, EditItemActivity.class);
+        /*intent.putExtra("item_name", name);
+        intent.putExtra("item_pos", position);*/
+        startActivityForResult(intent, REQUEST_CODE);
+        writeItems();
+
+    }
+
+    private void setupListViewListener() {
+        lvTasks.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        tasks.remove(position);
+                        tasksAdapter.notifyDataSetChanged();
+                        writeItems();
+                        return true;
+                    }
+                });
+        lvTasks.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Object obj = tasksAdapter.getItem(position);
+                        //getView(position,view,parent);
+                        String name = obj.toString();
+                        Intent intent = new Intent(CreateNewList.this, EditItemActivity.class);
+                        intent.putExtra("item_name", name);
+                        intent.putExtra("item_pos", position);
+                        startActivityForResult(intent, REQUEST_CODE);
+
+                    }
+
+                });
+    }
+    private void readItems(){
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        //read from db
+        tasks = new ArrayList<Task>();
+
+    }
+    private void writeItems(){
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+       // write to DB
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Extract name value from result extras
+            String name = data.getExtras().getString("edited_item_name");
+            int item_position = data.getExtras().getInt("edited_item_pos");
+            int code = data.getExtras().getInt("code", 0);
+            // Toast the name to display temporarily on screen
+            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+           // updateItemName(item_position, name);
+        }
+    }
+   /* public void updateItemName(int position, String item_name) {
+
+        TextView v = (TextView) lvTasks.getChildAt(position);
+        v.setText(item_name);
+        tasks.add(position + 1, item_name);
+        tasks.remove(position);
+        writeItems();
+    }*/
 }
