@@ -23,7 +23,7 @@ public class EditItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_item);
         mItemName = getIntent().getStringExtra("item_name");
         mItemPosition = getIntent().getIntExtra("item_pos", 0);
-        mEditText = (EditText)findViewById(R.id.item_name);
+        mEditText = (EditText)findViewById(R.id.task_name);
         mEditText.setText(mItemName);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
