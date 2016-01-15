@@ -12,8 +12,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 
+import com.codepath.simpletodo.Models.List;
 import com.codepath.simpletodo.R;
 
 import org.apache.commons.io.FileUtils;
@@ -27,18 +29,26 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
-    ListView lvItems;
+    ArrayAdapter<String> listsAdapter;
+    ListView lvLists;
     private final int REQUEST_CODE = 20;
+    private Toolbar mToolbar;
+    ArrayList<List> mLists;
+    ArrayAdapter<List> mListAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lvItems = (ListView) findViewById(R.id.lvItems);
+        lvLists = (ListView) findViewById(R.id.lvItems);
         readItems();
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
+        listsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        lvLists.setAdapter(listsAdapter);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setupListViewListener();
 
@@ -63,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.action_add){
+            Intent intent = new Intent(this, CreateNewList.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -70,29 +84,29 @@ public class MainActivity extends AppCompatActivity {
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
+        listsAdapter.add(itemText);
         etNewItem.setText("");
-        etNewItem.setTag(itemsAdapter.getCount() - 1);
+        etNewItem.setTag(listsAdapter.getCount() - 1);
         writeItems();
 
     }
 
     private void setupListViewListener() {
-        lvItems.setOnItemLongClickListener(
+        lvLists.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         items.remove(position);
-                        itemsAdapter.notifyDataSetChanged();
+                        listsAdapter.notifyDataSetChanged();
                         writeItems();
                         return true;
                     }
                 });
-        lvItems.setOnItemClickListener(
+        lvLists.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Object obj = itemsAdapter.getItem(position);
+                        Object obj = listsAdapter.getItem(position);
                         //getView(position,view,parent);
                         String name = obj.toString();
                         Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
@@ -139,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void updateItemName(int position, String item_name) {
 
-        TextView v = (TextView)lvItems.getChildAt(position);
+        TextView v = (TextView) lvLists.getChildAt(position);
          v.setText(item_name);
          items.add(position + 1, item_name);
          items.remove(position);

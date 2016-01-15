@@ -1,34 +1,28 @@
 package com.codepath.simpletodo.Activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 
 import com.codepath.simpletodo.R;
 
-public class EditItemActivity extends AppCompatActivity {
-    EditText mEditText;
-    String mItemName;
-    int mItemPosition;
-    private final int REQUEST_CODE = 20;
+public class CreateNewList extends AppCompatActivity {
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_item);
-        mItemName = getIntent().getStringExtra("item_name");
-        mItemPosition = getIntent().getIntExtra("item_pos", 0);
-        mEditText = (EditText)findViewById(R.id.item_name);
-        mEditText.setText(mItemName);
+        setContentView(R.layout.activity_create_new_list);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit_item, menu);
+        getMenuInflater().inflate(R.menu.menu_create_list, menu);
         return true;
     }
 
@@ -45,13 +39,5 @@ public class EditItemActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public void saveNewItem(View v){
-        Intent i = new Intent(EditItemActivity.this, MainActivity.class);
-        String name = mEditText.getText().toString();
-        i.putExtra("edited_item_name", name); // pass arbitrary data to launched activity
-        i.putExtra("edited_item_pos",  mItemPosition);
-        setResult(RESULT_OK, i);
-        finish();
     }
 }
