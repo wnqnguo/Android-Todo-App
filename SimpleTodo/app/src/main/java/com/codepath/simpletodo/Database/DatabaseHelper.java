@@ -23,24 +23,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TASK_NOTES = "Notes";
     public static final String TASK_PRIORITY = "PriorityLevel";
     public static final String TASK_COMPLETED = "isCompleted";
-    public static final String TASK_LIST_ID = "listId";
+    public static final String TASK_LIST_ID = "ListId";
     public static final String LIST_TABLE = "List";
     public static final String LIST_ID = "ListId";
     public static final String LIST_NAME = "ListName";
-    public static final String CREATE_TABLE_TASK = " create table "
-            + TASK_TABLE + " ("
-            + TASK_ID + " integer primary key autoincrement not null, "
-            + TASK_LIST_ID + "integer," + " FOREIGN KEY (" +TASK_LIST_ID+ ") REFERENCES "+ LIST_TABLE +"(" +LIST_ID +")"
-            + TASK_NAME + " text not null, "
-            + TASK_DUE_DATE + " text not null, "
-            + TASK_NOTES + " text not null, "
-            + TASK_PRIORITY + " text not null, "
-            + TASK_COMPLETED + " integer not null, " + ");";
-    //database version
     public static final String CREATE_TABLE_LIST = " create table "
             + LIST_TABLE +" ("
             + LIST_ID + " integer primary key autoincrement not null, "
             + LIST_NAME + " text not null " + ");";
+    public static final String CREATE_TABLE_TASK = " create table "
+            + TASK_TABLE + " ("
+            + TASK_ID + " integer primary key autoincrement not null, "
+            + TASK_LIST_ID + " integer not null, "
+            + TASK_NAME + " text not null, "
+            + TASK_DUE_DATE + " text, "
+            + TASK_NOTES + " text, "
+            + TASK_PRIORITY + " text, "
+            + TASK_COMPLETED + " integer not null, "
+            + "FOREIGN KEY(" +TASK_LIST_ID+ ") REFERENCES "+ LIST_TABLE +" (" +LIST_ID +")"+" );";
+    //database version
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,11 +50,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // SQL for creating the tables
+        db.execSQL(CREATE_TABLE_LIST);
+        Log.i(LOGTAG, "Table " + CREATE_TABLE_LIST + " has been created");
         db.execSQL(CREATE_TABLE_TASK);
         Log.i(LOGTAG, "Table " + CREATE_TABLE_TASK + " has been created");
 
-        db.execSQL(CREATE_TABLE_LIST);
-        Log.i(LOGTAG, "Table " + CREATE_TABLE_LIST + " has been created");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.codepath.simpletodo.Models.Task;
 import com.codepath.simpletodo.R;
 
 public class EditItemActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class EditItemActivity extends AppCompatActivity {
     int mItemPosition;
     private final int REQUEST_CODE = 20;
     private Toolbar mToolbar;
+    private Task testTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +28,10 @@ public class EditItemActivity extends AppCompatActivity {
         mEditText = (EditText)findViewById(R.id.task_name);
         mEditText.setText(mItemName);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        testTask = new Task(1,"eat cereal");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // testTask = new
     }
 
     @Override

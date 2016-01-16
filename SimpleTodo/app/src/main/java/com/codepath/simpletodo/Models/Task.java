@@ -4,23 +4,23 @@ package com.codepath.simpletodo.Models;
  * Created by wguo on 1/13/2016.
  */
 public class Task {
-    private int Id;
+    private long Id;
     private String TaskName;
     private String DueDate;
     private String PriorityLevel;
     private String Notes;
-    private int ListId;
+    private long ListId;
     private boolean Completed;
     public Task(int id, String TaskName) {
         this.Id = id;
         this.TaskName = TaskName;
     }
 
-    public int getId() {
+    public long getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         Id = id;
     }
 
@@ -56,7 +56,7 @@ public class Task {
         Notes = notes;
     }
 
-    public int getListId() {
+    public long getListId() {
         return ListId;
     }
 

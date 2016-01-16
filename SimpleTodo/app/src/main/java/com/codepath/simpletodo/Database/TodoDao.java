@@ -25,5 +25,12 @@ public class TodoDao {
             }
         }
     }*/
+    public void saveList(List list){
+        todoDataSource.open();
+        long listId = todoDataSource.saveList(list);
+        list.setId(listId);
+        todoDataSource.close();
+
+    }
 
 }

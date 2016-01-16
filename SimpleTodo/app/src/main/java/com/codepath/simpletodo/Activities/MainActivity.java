@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         lvLists.setAdapter(listsAdapter);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getAllList();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setupListViewListener();
@@ -158,6 +159,9 @@ public class MainActivity extends AppCompatActivity {
          items.add(position + 1, item_name);
          items.remove(position);
          writeItems();
+    }
+    public void getAllList(){
+
     }
 
 }

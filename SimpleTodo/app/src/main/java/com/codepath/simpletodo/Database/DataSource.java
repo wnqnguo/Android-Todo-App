@@ -31,13 +31,14 @@ public class DataSource {
         Log.i(LOGTAG, "Database closed");
         dbhelper.close();
     }
-    public void saveList(List list){
+    public long saveList(List list){
         ContentValues values = new ContentValues();
         values.clear();
-        values.put(DatabaseHelper.LIST_NAME, list.getName());
-        database.insertWithOnConflict(DatabaseHelper.LIST_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        values.put(DatabaseHelper.LIST_NAME, list.getListName());
+        long listId =  database.insert(DatabaseHelper.LIST_TABLE, null, values);
+        return listId;
     }
-    public void addTaskToList(Task task){
+    public long addTaskToList(Task task){
         ContentValues values = new ContentValues();
         values.clear();
         values.put(DatabaseHelper.TASK_NAME, task.getTaskName());
@@ -46,8 +47,8 @@ public class DataSource {
         values.put(DatabaseHelper.TASK_NOTES, task.getNotes());
         values.put(DatabaseHelper.TASK_PRIORITY, task.getPriorityLevel());
         values.put(DatabaseHelper.TASK_COMPLETED, task.isCompleted());
-
-        database.insertWithOnConflict(DatabaseHelper.TASK_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        long taskId = database.insert(DatabaseHelper.TASK_TABLE, null, values);
+        return taskId;
     }
 
     public Cursor getAllLists(){
@@ -65,6 +66,8 @@ public class DataSource {
         Cursor cursor = database.rawQuery(query, null);
         return cursor;
     }
+
+
 
 
 }

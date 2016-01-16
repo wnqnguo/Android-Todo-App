@@ -8,8 +8,13 @@ import java.text.SimpleDateFormat;
  * Created by wguo on 1/13/2016.
  */
 public class List {
-    private int Id;
-    private String Name;
+    private long Id;
+    private String ListName;
+
+    public List(int id, String ListName) {
+        this.Id = id;
+        this.ListName = ListName;
+    }
 
     public ArrayList<Task> getTasks() {
         return Tasks;
@@ -19,20 +24,20 @@ public class List {
         Tasks = tasks;
     }
 
-    public int getId() {
+    public long getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         Id = id;
     }
 
-    public String getName() {
-        return Name;
+    public String getListName() {
+        return ListName;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void ListName(String name) {
+        ListName = name;
     }
 
     private ArrayList<Task> Tasks;

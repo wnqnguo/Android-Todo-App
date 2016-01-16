@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.simpletodo.Database.DataSource;
+import com.codepath.simpletodo.Database.TodoDao;
 import com.codepath.simpletodo.Models.List;
 import com.codepath.simpletodo.Models.Task;
 import com.codepath.simpletodo.R;
@@ -36,6 +38,7 @@ public class CreateNewList extends AppCompatActivity {
     ListView lvTasks;
     private final int REQUEST_CODE = 20;
     private Toolbar mToolbar;
+    List testList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,10 @@ public class CreateNewList extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        testList = new List(1,"Saturday");
+        TodoDao tdDao = new TodoDao(CreateNewList.this);
+        tdDao.saveList(testList);
+
         inputLayoutTaskName = (TextInputLayout) findViewById(R.id.input_layout_name);
         inputTaskName = (EditText) findViewById(R.id.input_name);
         inputTaskName.addTextChangedListener(new MyTextWatcher(inputTaskName));
