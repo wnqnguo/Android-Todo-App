@@ -5,15 +5,15 @@ package com.codepath.simpletodo.Models;
  */
 public class Task {
     private int Id;
-    private String Name;
+    private String TaskName;
     private String DueDate;
     private String PriorityLevel;
     private String Notes;
-    private String List;
+    private int ListId;
     private boolean Completed;
-    public Task(int id, String Name) {
+    public Task(int id, String TaskName) {
         this.Id = id;
-        this.Name = Name;
+        this.TaskName = TaskName;
     }
 
     public int getId() {
@@ -24,12 +24,12 @@ public class Task {
         Id = id;
     }
 
-    public String getName() {
-        return Name;
+    public String getTaskName() {
+        return TaskName;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setTaskName(String TaskName) {
+        TaskName = TaskName;
     }
 
     public String getDueDate() {
@@ -56,12 +56,12 @@ public class Task {
         Notes = notes;
     }
 
-    public String getList() {
-        return List;
+    public int getListId() {
+        return ListId;
     }
 
-    public void setList(String list) {
-        List = list;
+    public void setListId(int listId) {
+        ListId = listId;
     }
 
     public boolean isCompleted() {
@@ -70,6 +70,20 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         Completed = completed;
+    }
+
+    public String ToString() {
+        String item = "";
+        item += "Id: " + this.Id +
+                ", TaskName: " + this.TaskName +
+                ", DueDate: " + this.DueDate +
+                ", PriorityLevel: " + this.PriorityLevel +
+                ", Notes: " + this.Notes +
+                ", ListId:  " + this.ListId +
+                ", Completed" + this.Completed+
+                " "
+        ;
+        return item;
     }
 
 
