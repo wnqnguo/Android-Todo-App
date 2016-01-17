@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.codepath.simpletodo.Models.List;
+import com.codepath.simpletodo.Models.Task;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,12 @@ public class TodoDao {
         list.setId(listId);
         todoDataSource.close();
 
+    }
+    public void addTaskToList( Task task){
+        todoDataSource.open();
+        long taskId = todoDataSource.addTaskToList(task);
+        task.setId(taskId);
+        todoDataSource.close();
     }
 
 }

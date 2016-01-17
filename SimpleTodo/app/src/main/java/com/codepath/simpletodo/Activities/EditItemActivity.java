@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.codepath.simpletodo.Database.TodoDao;
 import com.codepath.simpletodo.Models.Task;
 import com.codepath.simpletodo.R;
 
@@ -29,6 +30,12 @@ public class EditItemActivity extends AppCompatActivity {
         mEditText.setText(mItemName);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         testTask = new Task(1,"eat cereal");
+        testTask.setDueDate("2/15/2016");
+        testTask.setNotes("sdsdfsfs");
+        testTask.setCompleted(0);
+        testTask.setListId(1);
+        TodoDao tdDao = new TodoDao(EditItemActivity.this);
+        tdDao.addTaskToList(testTask);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         // testTask = new
