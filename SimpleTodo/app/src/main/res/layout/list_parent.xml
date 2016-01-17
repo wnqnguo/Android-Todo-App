@@ -2,13 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#dbdbda">
-    <ImageButton
-    
+    <item
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
-        android:src="@android:drawable/arrow_down_float" />
+        android:icon="@android:drawable/ic_action_remove" />
     <TextView
         android:id="@+id/parent_list_item_crime_title_text_view"
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:text="List Name" />
 
-    <ImageButton
+    <item
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
