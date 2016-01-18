@@ -14,19 +14,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codepath.simpletodo.Database.DataSource;
 import com.codepath.simpletodo.Database.TodoDao;
-import com.codepath.simpletodo.Models.List;
+import com.codepath.simpletodo.Models.TaskList;
 import com.codepath.simpletodo.Models.Task;
 import com.codepath.simpletodo.R;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class CreateNewList extends AppCompatActivity {
@@ -38,7 +33,7 @@ public class CreateNewList extends AppCompatActivity {
     ListView lvTasks;
     private final int REQUEST_CODE = 20;
     private Toolbar mToolbar;
-    List testList;
+    TaskList testList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +42,7 @@ public class CreateNewList extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        testList = new List(1,"Saturday");
+        testList = new TaskList(1,"Saturday");
         TodoDao tdDao = new TodoDao(CreateNewList.this);
         tdDao.saveList(testList);
 

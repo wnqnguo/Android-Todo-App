@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.codepath.simpletodo.Models.List;
+import com.codepath.simpletodo.Models.TaskList;
 import com.codepath.simpletodo.Models.Task;
 
 /**
@@ -31,7 +31,7 @@ public class DataSource {
         Log.i(LOGTAG, "Database closed");
         dbhelper.close();
     }
-    public long saveList(List list){
+    public long saveList(TaskList list){
         ContentValues values = new ContentValues();
         values.clear();
         values.put(DatabaseHelper.LIST_NAME, list.getListName());

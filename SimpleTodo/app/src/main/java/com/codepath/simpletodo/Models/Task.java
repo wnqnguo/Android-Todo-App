@@ -10,7 +10,7 @@ public class Task {
     private String PriorityLevel;
     private String Notes;
     private long ListId;
-    private int Completed;
+    private boolean Completed;
     public Task(int id, String TaskName) {
         this.Id = id;
         this.TaskName = TaskName;
@@ -64,11 +64,11 @@ public class Task {
         ListId = listId;
     }
 
-    public int isCompleted() {
+    public boolean isCompleted() {
         return Completed;
     }
 
-    public void setCompleted(int completed) {
+    public void setCompleted(boolean completed) {
         Completed = completed;
     }
 

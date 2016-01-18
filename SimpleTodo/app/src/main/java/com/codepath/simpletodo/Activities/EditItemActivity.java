@@ -32,7 +32,7 @@ public class EditItemActivity extends AppCompatActivity {
         testTask = new Task(1,"eat cereal");
         testTask.setDueDate("2/15/2016");
         testTask.setNotes("sdsdfsfs");
-        testTask.setCompleted(0);
+        testTask.setCompleted(false);
         testTask.setListId(1);
         TodoDao tdDao = new TodoDao(EditItemActivity.this);
         tdDao.addTaskToList(testTask);

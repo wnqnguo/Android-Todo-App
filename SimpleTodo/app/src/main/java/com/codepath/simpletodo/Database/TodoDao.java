@@ -1,12 +1,9 @@
 package com.codepath.simpletodo.Database;
 
 import android.content.Context;
-import android.database.Cursor;
 
-import com.codepath.simpletodo.Models.List;
+import com.codepath.simpletodo.Models.TaskList;
 import com.codepath.simpletodo.Models.Task;
-
-import java.util.ArrayList;
 
 /**
  * Created by wguo on 1/14/2016.
@@ -26,7 +23,7 @@ public class TodoDao {
             }
         }
     }*/
-    public void saveList(List list){
+    public void saveList(TaskList list){
         todoDataSource.open();
         long listId = todoDataSource.saveList(list);
         list.setId(listId);
