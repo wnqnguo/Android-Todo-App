@@ -24,6 +24,18 @@ public class ListParentViewHolder extends ParentViewHolder {
         mListParentRemove = (ImageButton) itemView.findViewById(R.id.parent_list_item_remove);
         mListName = (TextView) itemView.findViewById(R.id.parent_list_item_name);
         mParentDropDownArrow  = (ImageButton) itemView.findViewById(R.id.parent_list_item_expand);
+        mParentDropDownArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mParentDropDownArrow.getRotation()==INITIAL_POSITION){
+                    expandView();
+                }else{
+                    collapseView();
+                }
+
+            }
+        });
 
 
 
@@ -43,7 +55,10 @@ public class ListParentViewHolder extends ParentViewHolder {
             mParentDropDownArrow.setRotation(INITIAL_POSITION);
         }
     }
-
+    @Override
+    public boolean shouldItemViewClickToggleExpansion(){
+        return false;
+    }
 
 }
 

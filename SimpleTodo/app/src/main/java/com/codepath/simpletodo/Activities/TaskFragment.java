@@ -31,7 +31,7 @@ public class TaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTask = new Task(1,"test");
+       // mTask = new Task(1,"test");
     }
 
     @Override

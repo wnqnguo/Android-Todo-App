@@ -2,8 +2,10 @@ package com.codepath.simpletodo.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,36 +24,28 @@ import java.util.List;
 public class ListFragment extends Fragment {
     private RecyclerView mListRecyclerView;
     private List mLists;
+    private Toolbar mToolbar;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
         mListRecyclerView = (RecyclerView) view.findViewById(R.id.task_list_recycler_view);
-        mListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+      //  mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+
+
         mLists = Helper.getgeneratedLists();
         ListExpandableAdaptor listExpandableAdapter = new ListExpandableAdaptor(getActivity(),mLists);
 
 
 
-       listExpandableAdapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
-           @Override
-           public void onListItemExpanded(int position) {
-               List TaskList = (List) mLists.get(position);
 
-
-           }
-
-           @Override
-           public void onListItemCollapsed(int position) {
-               List collapsedRecipe = (List) mLists.get(position);
-
-
-           }
-       });
-
-        listExpandableAdapter.onRestoreInstanceState(savedInstanceState);
+      // listExpandableAdapter.onRestoreInstanceState(savedInstanceState);
         mListRecyclerView.setAdapter(listExpandableAdapter);
+        mListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
     }
 
