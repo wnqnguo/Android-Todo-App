@@ -34,18 +34,19 @@ public class ListFragment extends Fragment {
 
         mListRecyclerView = (RecyclerView) view.findViewById(R.id.task_list_recycler_view);
 
-      //  mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
-
-        mLists = Helper.getgeneratedLists();
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        //((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+       // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+       mLists = Helper.getgeneratedLists();
         ListExpandableAdaptor listExpandableAdapter = new ListExpandableAdaptor(getActivity(),mLists);
 
 
 
 
-      // listExpandableAdapter.onRestoreInstanceState(savedInstanceState);
+
+        listExpandableAdapter.onRestoreInstanceState(savedInstanceState);
         mListRecyclerView.setAdapter(listExpandableAdapter);
-        mListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
     }
 

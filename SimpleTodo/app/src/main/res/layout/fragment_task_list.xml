@@ -6,9 +6,10 @@
 <android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/task_list_recycler_view"
+    android:layout_below="@id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
-<include
-android:id="@+id/toolbar"
-layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 </RelativeLayout>

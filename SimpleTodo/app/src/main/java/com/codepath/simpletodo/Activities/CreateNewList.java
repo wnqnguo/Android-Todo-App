@@ -40,8 +40,8 @@ public class CreateNewList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_list);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+       // setSupportActionBar(mToolbar);
+       // getSupportActionBar().setDisplayShowHomeEnabled(true);
         testList = new TaskList(1,"Saturday");
         TodoDao tdDao = new TodoDao(CreateNewList.this);
         tdDao.saveList(testList);
