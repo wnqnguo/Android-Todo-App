@@ -9,11 +9,22 @@
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
     <ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_margin="8dp"
+    android:id="@+id/add"
+    android:src="@drawable/ic_action_add"
+    android:background="@null"
+    android:layout_gravity="right"
+    />
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
-        android:src="@drawable/ic_action_add"
+        android:id="@+id/save"
+        android:src="@drawable/ic_action_save"
         android:background="@null"
         android:layout_gravity="right"
         />

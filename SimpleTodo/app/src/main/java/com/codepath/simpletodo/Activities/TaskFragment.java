@@ -63,7 +63,7 @@ public class TaskFragment extends Fragment {
         mCompletedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mTask.setCompleted(isChecked);
+                mTask.setCompleted(1);
             }
         });
 

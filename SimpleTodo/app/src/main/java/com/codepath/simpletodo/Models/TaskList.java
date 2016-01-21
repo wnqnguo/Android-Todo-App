@@ -13,9 +13,8 @@ public class TaskList implements ParentListItem {
     private String ListName;
     private List<Task> mChildrenList;
 
-    public TaskList(int id, String ListName) {
-        this.Id = id;
-        this.ListName = ListName;
+    public TaskList() {
+
     }
     public long getId() {
         return Id;
@@ -29,9 +28,10 @@ public class TaskList implements ParentListItem {
         return ListName;
     }
 
-    public void ListName(String name) {
-        ListName = name;
+    public void setListName(String name) {
+         ListName = name;
     }
+
 
 
 

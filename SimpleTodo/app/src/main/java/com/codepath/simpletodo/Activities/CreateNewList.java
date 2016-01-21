@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,28 +34,48 @@ public class CreateNewList extends AppCompatActivity {
     ListView lvTasks;
     private final int REQUEST_CODE = 20;
     private Toolbar mToolbar;
-    TaskList testList;
+    TaskList mtaskList;
+    private ImageButton mAdd;
+    private ImageButton mSave;
+    private String mTaskListName;
+    private TodoDao todoDao;
+    private long taskList_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_list);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(mToolbar);
-       // getSupportActionBar().setDisplayShowHomeEnabled(true);
-        testList = new TaskList(1,"Saturday");
-        TodoDao tdDao = new TodoDao(CreateNewList.this);
-        tdDao.saveList(testList);
-
+        inputTaskName = (EditText)findViewById(R.id.input_name);
+        Intent intent = getIntent();
+        taskList_id = intent.getLongExtra("taskListId",0);
+        mtaskList = new TaskList();
         inputLayoutTaskName = (TextInputLayout) findViewById(R.id.input_layout_name);
         inputTaskName = (EditText) findViewById(R.id.input_name);
         inputTaskName.addTextChangedListener(new MyTextWatcher(inputTaskName));
         lvTasks = (ListView) findViewById(R.id.lvTasks);
+        todoDao = new TodoDao(this);
         readItems();
         tasks = new ArrayList<Task>();
         tasksAdapter = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1,tasks);
         lvTasks.setAdapter(tasksAdapter);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mAdd = (ImageButton)findViewById(R.id.add);
+        mSave = (ImageButton)findViewById(R.id.save);
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewTask();
+            }
+        });
+        mSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveAndFinish();
+            }
+        });
+
+        setSupportActionBar(mToolbar);
     }
 
     @Override
@@ -98,15 +119,19 @@ public class CreateNewList extends AppCompatActivity {
             }
         }
     }
-    public void onAddTask(View v) {
+    public void addNewTask() {
       //  EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
       //  String itemText = etNewItem.getText().toString();
       //  tasksAdapter.add(itemText);
      //   etNewItem.setText("");
       //  etNewItem.setTag(tasksAdapter.getCount() - 1);
+        if(taskList_id==0){
+            mTaskListName = inputTaskName.getText().toString();
+            mtaskList.setListName(mTaskListName);
+            todoDao.saveList(mtaskList);
+        }
         Intent intent = new Intent(CreateNewList.this, EditItemActivity.class);
-        /*intent.putExtra("item_name", name);
-        intent.putExtra("item_pos", position);*/
+        intent.putExtra("taskListId",(long)taskList_id);
         startActivityForResult(intent, REQUEST_CODE);
         writeItems();
 
@@ -165,12 +190,11 @@ public class CreateNewList extends AppCompatActivity {
            // updateItemName(item_position, name);
         }
     }
-   /* public void updateItemName(int position, String item_name) {
 
-        TextView v = (TextView) lvTasks.getChildAt(position);
-        v.setText(item_name);
-        tasks.add(position + 1, item_name);
-        tasks.remove(position);
-        writeItems();
-    }*/
+    public void saveAndFinish(){
+        mTaskListName = inputTaskName.getText().toString();
+        mtaskList.setListName(mTaskListName);
+        todoDao.saveList(mtaskList);
+        finish();
+    }
 }

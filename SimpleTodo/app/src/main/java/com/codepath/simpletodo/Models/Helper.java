@@ -14,10 +14,10 @@ public class Helper {
         List<TaskList> list = new ArrayList<>();
 
         for(int i = 0; i < 4; i++){
-            TaskList temp = new TaskList(1,"movies");
+            TaskList temp = new TaskList();
             List<Task> tasks = new ArrayList<>();
             for(int j = 0; j < 5; j++){
-                tasks.add(new Task(1,"star wars"));
+                tasks.add(new Task());
             }
             temp.setChildItemList(tasks);
             list.add(temp);

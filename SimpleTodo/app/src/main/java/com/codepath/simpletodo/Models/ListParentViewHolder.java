@@ -1,12 +1,15 @@
 package com.codepath.simpletodo.Models;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
+import com.codepath.simpletodo.Activities.CreateNewList;
+import com.codepath.simpletodo.Database.TodoDao;
 import com.codepath.simpletodo.R;
 
 /**
@@ -19,20 +22,32 @@ public class ListParentViewHolder extends ParentViewHolder {
     public ImageButton mListParentRemove;
     public TextView mListName;
     public ImageButton mParentDropDownArrow ;
+    private TodoDao todoDao;
+    private TaskList mList;
+    public long taskListId;
     public ListParentViewHolder(View itemView){
         super(itemView);
         mListParentRemove = (ImageButton) itemView.findViewById(R.id.parent_list_item_remove);
         mListName = (TextView) itemView.findViewById(R.id.parent_list_item_name);
         mParentDropDownArrow  = (ImageButton) itemView.findViewById(R.id.parent_list_item_expand);
+        todoDao = new TodoDao(itemView.getContext());
         mParentDropDownArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(mParentDropDownArrow.getRotation()==INITIAL_POSITION){
                     expandView();
                 }else{
                     collapseView();
                 }
+            }
+        });
+
+        mListName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(v.getContext(), CreateNewList.class);
+                intent.putExtra("taskListId",(long)taskListId);
+                v.getContext().startActivity(intent);
 
             }
         });
@@ -59,6 +74,11 @@ public class ListParentViewHolder extends ParentViewHolder {
     public boolean shouldItemViewClickToggleExpansion(){
         return false;
     }
+
+    public void setTaskListId(long id){
+        taskListId = id;
+    }
+
 
 }
 

@@ -61,7 +61,7 @@ public class DataSource {
         Cursor cursor = database.rawQuery(query, null);
         return cursor;
     }
-    public Cursor getTaskById(int listId){
+    public Cursor getTaskById(long listId){
         String query = "SELECT * FROM " + DatabaseHelper.TASK_TABLE +" Where listId = " + listId;
         Cursor cursor = database.rawQuery(query, null);
         return cursor;
