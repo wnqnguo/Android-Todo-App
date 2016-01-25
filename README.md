@@ -27,8 +27,9 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 * [x] List anything else that you can get done to improve the app functionality!
-* -Addinged expandable list view using google material's recyclerview 
+* -Added expandable list view using google material's recyclerview 
 * -used a 3rd party library to creat custom adptors 
+* -allow user to create lists and add tasks to them
 
 
 
