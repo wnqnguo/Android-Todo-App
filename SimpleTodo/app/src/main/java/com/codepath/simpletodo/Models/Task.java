@@ -10,7 +10,7 @@ public class Task {
     private String PriorityLevel;
     private String Notes;
     private long ListId;
-    private long Completed;
+    private String Completed;
     public Task() {
 
     }
@@ -63,11 +63,11 @@ public class Task {
         ListId = listId;
     }
 
-    public long isCompleted() {
+    public String isCompleted() {
         return Completed;
     }
 
-    public void setCompleted(long completed) {
+    public void setCompleted(String completed) {
         Completed = completed;
     }
 

@@ -60,7 +60,8 @@ public class EditItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
         Intent intent = getIntent();
-
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_item);
+        mToolbar.setTitle("SimpleTodo");
         taskList_id = intent.getLongExtra("taskListid",0);
         task_id = intent.getLongExtra("taskId",0);
         Status = new ArrayList();
@@ -156,11 +157,11 @@ public class EditItemActivity extends AppCompatActivity {
         mTask.setPriorityLevel(String.valueOf(mPriority.getSelectedItem()));
         mTask.setNotes(edNotes.getText().toString());
         mTask.setListId(taskList_id);
-
+        mTask.setCompleted(String.valueOf(mStatus.getSelectedItem()));
         if(temp == null||temp.isEmpty()){
             NameDialog();
         }else{
-            todoDao.addTaskToList(mTask);
+            todoDao.updateTaskById(mTask);
             goBackToList();
             finish();
         }
@@ -209,8 +210,15 @@ public class EditItemActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 todoDao.removeTaskFromList(task_id);
-//               Intent intent = new Intent(v.getContext(), MainActivity.class);
-//                intent.putExtra("taskListid", mTaskListId);
+                goBackToList();
+                finish();
+
+            }
+        });
+        alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                arg0.dismiss();
                 finish();
 
             }
@@ -226,10 +234,10 @@ public class EditItemActivity extends AppCompatActivity {
         if(mTask.getNotes()!=null){
             edNotes.setText(mTask.getNotes());
         }
-        if(mTask.isCompleted()==0){
-            mStatus.setSelection(0);
-        }else{
+        if(mTask.isCompleted().equals("DONE")){
             mStatus.setSelection(1);
+        }else{
+            mStatus.setSelection(0);
         }
         if(mTask.getPriorityLevel().equals("LOW")){
             mPriority.setSelection(0);

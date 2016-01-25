@@ -3,7 +3,6 @@ package com.codepath.simpletodo.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,20 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.codepath.simpletodo.Database.TodoDao;
-import com.codepath.simpletodo.Models.Helper;
 import com.codepath.simpletodo.Models.ListExpandableAdaptor;
-import com.codepath.simpletodo.Models.Task;
 import com.codepath.simpletodo.Models.TaskList;
 import com.codepath.simpletodo.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -46,13 +39,17 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         Log.e("here","called ron create");
         Intent intent = getActivity().getIntent();
-        taskList_id = intent.getLongExtra("taskListid",0);
+        taskList_id = intent.getLongExtra("taskListid",-1);
         mListRecyclerView = (RecyclerView) view.findViewById(R.id.task_list_recycler_view);
         todoDao = new TodoDao(view.getContext());
         mListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mToolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        mToolbar.setTitle("SimpleTodo");
         mLists = todoDao.getAllLists();
         ArrayList<TaskList> temp = todoDao.getAllLists();
          childLayout = LayoutInflater.from(this.getContext()).inflate(R.layout.list_child, null);
@@ -60,14 +57,15 @@ public class ListFragment extends Fragment {
       //  mListRecyclerView.addView(remove);
         if(mLists.size()>0){
             final ListExpandableAdaptor listExpandableAdapter = new ListExpandableAdaptor(getActivity(),mLists);
-            if(taskList_id!=0){
+            if(taskList_id>-1){
                listExpandableAdapter.mTaskListId = taskList_id;
-                listExpandableAdapter.expandParent((int) taskList_id);
+                int position = (int)taskList_id - 1;
+                listExpandableAdapter.expandParent(position);
 
             }
 
             mListRecyclerView.setAdapter(listExpandableAdapter);
-            listExpandableAdapter.expandAllParents();
+
             listExpandableAdapter.onRestoreInstanceState(savedInstanceState);
             mListRecyclerView.setAdapter(listExpandableAdapter);
               ////  final int parentPosition = i;
@@ -97,7 +95,7 @@ public class ListFragment extends Fragment {
 
     }
     public void addNewList(){
-       Intent intent = new Intent(getActivity(), CreateNewList.class);
+       Intent intent = new Intent(getActivity(), EditList.class);
         startActivity(intent);
     }
     @Override
@@ -113,11 +111,11 @@ public class ListFragment extends Fragment {
     public void onResume(){
         super.onResume();
         mListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mLists = todoDao.getAllLists();
+        List my_temp= todoDao.getAllLists();
 
 
 
-        if(mLists.size()>0) {
+        if(my_temp.size()>0) {
             ListExpandableAdaptor listExpandableAdapter = new ListExpandableAdaptor(getActivity(), mLists);
             ArrayList<TaskList> temp = todoDao.getAllLists();
             // listExpandableAdapter.onRestoreInstanceState(savedInstanceState);
@@ -128,7 +126,11 @@ public class ListFragment extends Fragment {
             // listExpandableAdapter.expandParent(6);
             //listExpandableAdapter.expandParent(temp.get(6));
             int position = (int )taskList_id -1;
-            listExpandableAdapter.expandParent(position);
+            if(taskList_id>-1){
+
+                listExpandableAdapter.expandParent(position);
+            }
+
             // listExpandableAdapter.expandAllParents();
         }
         Log.e("here","called onsume");

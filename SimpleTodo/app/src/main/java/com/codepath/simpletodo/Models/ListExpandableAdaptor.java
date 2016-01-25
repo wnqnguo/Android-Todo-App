@@ -1,19 +1,14 @@
 package com.codepath.simpletodo.Models;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
-import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
-import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
-import com.codepath.simpletodo.Activities.CreateNewList;
 import com.codepath.simpletodo.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,10 +37,9 @@ public class ListExpandableAdaptor extends ExpandableRecyclerAdapter<ListParentV
         TaskList list = (TaskList) parentListItem;
         listParentViewHolder.mListName.setText(list.getListName());
         listParentViewHolder.setTaskListId(list.getId());
-        if(list.getId()==mTaskListId){
-            expandParent((int)mTaskListId);
+        listParentViewHolder.taskListName = list.getListName();
+      //  listParentViewHolder.mListId.setText(list.getId()+"");
 
-        }
     }
     @Override
     public void onBindChildViewHolder(ListChildViewHolder listhildViewHolder, int i, Object childObject) {
@@ -54,10 +48,10 @@ public class ListExpandableAdaptor extends ExpandableRecyclerAdapter<ListParentV
             if(task.getTaskName()!=null){
                 listhildViewHolder.mTaskName.setText(task.getTaskName().toString());
             }
-            if(task.isCompleted()==0){
+            if(task.isCompleted().equals("TO-DO")){
                 listhildViewHolder.mTaskComplete.setChecked(false);
             }
-            if(task.isCompleted()==1){
+            if(task.isCompleted().equals("DONE")){
                 listhildViewHolder.mTaskComplete.setChecked(true);
             }
             if(task.getPriorityLevel() != null){
@@ -74,6 +68,9 @@ public class ListExpandableAdaptor extends ExpandableRecyclerAdapter<ListParentV
 
                     }
                 }
+            }
+            if(task.getDueDate()!=null){
+                listhildViewHolder.mTaskDueDate.setText(task.getDueDate());
             }
           listhildViewHolder.mTaskId = task.getId();
           listhildViewHolder.mTaskListId = task.getListId();

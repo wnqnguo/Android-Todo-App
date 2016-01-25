@@ -74,6 +74,40 @@ public class DataSource {
         Cursor cursor = database.rawQuery(query, null);
         return cursor;
     }
+    public void updateListById(long listId, String listName){
+        String query = "UPDATE " + DatabaseHelper.LIST_TABLE +" SET ListName = "+'"'+listName +'"'+" WHERE ListId = " + listId;
+       // Cursor cursor = database.rawQuery(query, null);
+
+        database.execSQL(query);
+
+
+
+    }
+    public void deleteList(long listId){
+        database.delete(DatabaseHelper.LIST_TABLE, DatabaseHelper.LIST_ID + "=" + listId, null);
+    }
+    public void deleteTaskByListId(long listId){
+        database.delete(DatabaseHelper.TASK_TABLE, DatabaseHelper.TASK_LIST_ID+ "=" + listId, null);
+    }
+    public void updateTaskStatus(long taskId,String status){
+        String query = "UPDATE " + DatabaseHelper.TASK_TABLE +" SET isCompleted = "+'"'+status +'"'+" WHERE TaskId = " + taskId;
+        // Cursor cursor = database.rawQuery(query, null);
+
+        database.execSQL(query);
+    }
+    public void updateTaskById(Task task){
+        String updateName = "UPDATE " + DatabaseHelper.TASK_TABLE +" SET TaskName = "+'"'+task.getTaskName() +'"'+" WHERE TaskId = " + task.getId();
+        String updateDueDate = "UPDATE " + DatabaseHelper.TASK_TABLE +" SET DueDate = "+'"'+task.getDueDate() +'"'+" WHERE TaskId = " + task.getId();
+        String updateNotes = "UPDATE " + DatabaseHelper.TASK_TABLE +" SET Notes = "+'"'+task.getNotes() +'"'+" WHERE TaskId = " + task.getId();
+        String updatePriorityLevel = "UPDATE " + DatabaseHelper.TASK_TABLE +" SET PriorityLevel = "+'"'+task.getPriorityLevel() +'"'+" WHERE TaskId = " + task.getId();
+        String updateStatus = "UPDATE " + DatabaseHelper.TASK_TABLE +" SET isCompleted = "+'"'+task.isCompleted() +'"'+" WHERE TaskId = " + task.getId();
+
+        database.execSQL(updateName);
+        database.execSQL(updateDueDate);
+        database.execSQL(updateNotes);
+        database.execSQL(updatePriorityLevel);
+        database.execSQL(updateStatus);
+    }
 
 
 

@@ -12,7 +12,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //String to log
     private static final String LOGTAG = "TODO_DB";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
 
     //name of database being created
     private static final String DATABASE_NAME = "todo.db";
@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TASK_DUE_DATE + " text, "
             + TASK_NOTES + " text, "
             + TASK_PRIORITY + " text, "
-            + TASK_COMPLETED + " integer not null, "
+            + TASK_COMPLETED + " text not null, "
             + "FOREIGN KEY(" +TASK_LIST_ID+ ") REFERENCES "+ LIST_TABLE +" (" +LIST_ID +")"+" );";
     //database version
 
@@ -63,5 +63,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(LOGTAG, "Dropping tables...");
         db.execSQL("DROP TABLE IF EXISTS " + TASK_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + LIST_TABLE);
+        onCreate(db);
     }
 }

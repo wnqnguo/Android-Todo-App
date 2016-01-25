@@ -51,7 +51,8 @@ public class AddNewitem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_item);
-       // mToolbar = findViewById(R.id.toolbar_item);
+       // mToolbar = findViewById(R.id.toolbar);
+      //  mToolbar.setTitle("SimpleTodo");
         Status = new ArrayList();
         Priority = new ArrayList();
         Intent intent = getIntent();
@@ -164,7 +165,7 @@ public class AddNewitem extends AppCompatActivity {
         mTask.setPriorityLevel(String.valueOf(mPriority.getSelectedItem()));
         mTask.setNotes(edNotes.getText().toString());
         mTask.setListId(taskList_id);
-
+        mTask.setCompleted(String.valueOf(mStatus.getSelectedItem()));
         if(temp == null||temp.isEmpty()){
             NameDialog();
         }else{

@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
-import com.codepath.simpletodo.Activities.CreateNewList;
+import com.codepath.simpletodo.Activities.EditList;
 import com.codepath.simpletodo.Database.TodoDao;
 import com.codepath.simpletodo.R;
 
@@ -21,14 +21,17 @@ public class ListParentViewHolder extends ParentViewHolder {
     private static final boolean HONEYCOMB_AND_ABOVE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     public ImageButton mListParentRemove;
     public TextView mListName;
+    public TextView mListId;
     public ImageButton mParentDropDownArrow ;
     private TodoDao todoDao;
     private TaskList mList;
     public long taskListId;
+    public String taskListName;
     public ListParentViewHolder(View itemView){
         super(itemView);
         mListParentRemove = (ImageButton) itemView.findViewById(R.id.parent_list_item_remove);
         mListName = (TextView) itemView.findViewById(R.id.parent_list_item_name);
+
         mParentDropDownArrow  = (ImageButton) itemView.findViewById(R.id.parent_list_item_expand);
         todoDao = new TodoDao(itemView.getContext());
         mParentDropDownArrow.setOnClickListener(new View.OnClickListener() {
@@ -45,16 +48,15 @@ public class ListParentViewHolder extends ParentViewHolder {
         mListName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(v.getContext(), CreateNewList.class);
+               Intent intent = new Intent(v.getContext(), EditList.class);
                 intent.putExtra("taskListId",(long)taskListId);
+                intent.putExtra("taskListName",taskListName);
                 v.getContext().startActivity(intent);
 
 
             }
         });
-        if(taskListId>0){
-            expandView();
-        }
+
 
 
 

@@ -38,7 +38,7 @@ public class TodoDao {
                         task.setDueDate(taskCursor.getString(3));
                         task.setNotes(taskCursor.getString(4));
                         task.setPriorityLevel(taskCursor.getString(5));
-                        task.setCompleted(taskCursor.getLong(6));
+                        task.setCompleted(taskCursor.getString(6));
                         tasks.add(task);
                     }
 
@@ -84,12 +84,33 @@ public class TodoDao {
                 task.setDueDate(taskCursor.getString(3));
                 task.setNotes(taskCursor.getString(4));
                 task.setPriorityLevel(taskCursor.getString(5));
-                task.setCompleted(taskCursor.getLong(6));
+                task.setCompleted(taskCursor.getString(6));
             }
 
         }
         todoDataSource.close();
         return task;
+    }
+    public void upDateListById(long taskListId, String name){
+        todoDataSource.open();
+        todoDataSource.updateListById(taskListId, name);
+        todoDataSource.close();
+    }
+    public void deleteList(long listId){
+        todoDataSource.open();
+        todoDataSource.deleteTaskByListId(listId);
+        todoDataSource.deleteList(listId);
+        todoDataSource.close();
+    }
+    public void updateTaskStatus(long taskId,String status){
+        todoDataSource.open();
+        todoDataSource.updateTaskStatus(taskId, status);
+        todoDataSource.close();
+    }
+    public void updateTaskById(Task task){
+        todoDataSource.open();
+        todoDataSource.updateTaskById(task);
+        todoDataSource.close();
     }
 
 }
