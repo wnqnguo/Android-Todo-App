@@ -1,6 +1,10 @@
 package com.codepath.simpletodo.Models;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
+import com.codepath.simpletodo.Activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,4 +29,6 @@ public class Helper {
         }
         return parentObjects;
     }
+
 }
+

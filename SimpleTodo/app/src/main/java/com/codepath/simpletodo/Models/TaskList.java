@@ -45,6 +45,7 @@ public class TaskList implements ParentListItem {
         mChildrenList = list;
     }
 
+
     @Override
     public boolean isInitiallyExpanded() {
         return false;

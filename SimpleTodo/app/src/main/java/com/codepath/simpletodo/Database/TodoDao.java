@@ -26,12 +26,12 @@ public class TodoDao {
                 TaskList taskList = new TaskList();
                 taskList.setId(listCursor.getInt(0));
                 taskList.setListName(listCursor.getString(1));
-                Cursor taskCursor = todoDataSource.getTaskById(listCursor.getLong(0));
-                List tasks = new ArrayList<Task>();
+                Cursor taskCursor = todoDataSource.getTaskByListId(listCursor.getLong(0));
+                List<Task> tasks = new ArrayList<Task>();
                 if (taskCursor != null) {
-                    Task task = new Task();
-                    while (taskCursor.moveToNext()) {
 
+                    while (taskCursor.moveToNext()) {
+                        Task task = new Task();
                         task.setId(taskCursor.getLong(0));
                         task.setListId(taskCursor.getLong(1));
                         task.setTaskName(taskCursor.getString(2));
@@ -39,9 +39,9 @@ public class TodoDao {
                         task.setNotes(taskCursor.getString(4));
                         task.setPriorityLevel(taskCursor.getString(5));
                         task.setCompleted(taskCursor.getLong(6));
-
+                        tasks.add(task);
                     }
-                    tasks.add(task);
+
                 }
                 taskList.setChildItemList(tasks);
                 Lists.add(taskList);
@@ -53,11 +53,12 @@ public class TodoDao {
         return Lists;
     }
 
-    public void saveList(TaskList list){
+    public long saveList(TaskList list){
         todoDataSource.open();
         long listId = todoDataSource.saveList(list);
         list.setId(listId);
         todoDataSource.close();
+        return listId;
 
     }
     public void addTaskToList( Task task){
@@ -65,6 +66,30 @@ public class TodoDao {
         long taskId = todoDataSource.addTaskToList(task);
         task.setId(taskId);
         todoDataSource.close();
+    }
+    public void removeTaskFromList(long taskId){
+        todoDataSource.open();
+        todoDataSource.removeTaskFromList(taskId);
+        todoDataSource.close();
+    }
+    public Task getTaskById(long taskId){
+        Task task = new Task();
+        todoDataSource.open();
+        Cursor taskCursor =  todoDataSource.getTaskByTaskId(taskId);
+        if(taskCursor!=null){
+            while(taskCursor.moveToNext()){
+                task.setId(taskCursor.getLong(0));
+                task.setListId(taskCursor.getLong(1));
+                task.setTaskName(taskCursor.getString(2));
+                task.setDueDate(taskCursor.getString(3));
+                task.setNotes(taskCursor.getString(4));
+                task.setPriorityLevel(taskCursor.getString(5));
+                task.setCompleted(taskCursor.getLong(6));
+            }
+
+        }
+        todoDataSource.close();
+        return task;
     }
 
 }

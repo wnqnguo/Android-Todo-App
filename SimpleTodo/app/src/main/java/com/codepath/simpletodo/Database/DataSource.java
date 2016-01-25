@@ -61,8 +61,16 @@ public class DataSource {
         Cursor cursor = database.rawQuery(query, null);
         return cursor;
     }
-    public Cursor getTaskById(long listId){
-        String query = "SELECT * FROM " + DatabaseHelper.TASK_TABLE +" Where listId = " + listId;
+    public Cursor getTaskByListId(long listId){
+        String query = "SELECT * FROM " + DatabaseHelper.TASK_TABLE +" Where ListId = " + listId;
+        Cursor cursor = database.rawQuery(query, null);
+        return cursor;
+    }
+    public void removeTaskFromList(long taskId){
+        database.delete(DatabaseHelper.TASK_TABLE, DatabaseHelper.TASK_ID + "=" + taskId, null);
+    }
+    public Cursor getTaskByTaskId(long taskId){
+        String query = "SELECT * FROM " + DatabaseHelper.TASK_TABLE +" Where TaskId = " + taskId;
         Cursor cursor = database.rawQuery(query, null);
         return cursor;
     }

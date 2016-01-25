@@ -38,8 +38,9 @@ public class CreateNewList extends AppCompatActivity {
     private ImageButton mAdd;
     private ImageButton mSave;
     private String mTaskListName;
-    private TodoDao todoDao;
     private long taskList_id;
+    private ArrayList<TaskList> mList;
+    private TodoDao todoDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class CreateNewList extends AppCompatActivity {
         inputTaskName = (EditText)findViewById(R.id.input_name);
         Intent intent = getIntent();
         taskList_id = intent.getLongExtra("taskListId",0);
+        todoDao = new TodoDao(this);
+        mList = todoDao.getAllLists();
         mtaskList = new TaskList();
         inputLayoutTaskName = (TextInputLayout) findViewById(R.id.input_layout_name);
         inputTaskName = (EditText) findViewById(R.id.input_name);
@@ -125,13 +128,15 @@ public class CreateNewList extends AppCompatActivity {
       //  tasksAdapter.add(itemText);
      //   etNewItem.setText("");
       //  etNewItem.setTag(tasksAdapter.getCount() - 1);
-        if(taskList_id==0){
+        long temp =0;
+        if(taskList_id==0) {
+
             mTaskListName = inputTaskName.getText().toString();
             mtaskList.setListName(mTaskListName);
-            todoDao.saveList(mtaskList);
+            taskList_id = todoDao.saveList(mtaskList);
         }
-        Intent intent = new Intent(CreateNewList.this, EditItemActivity.class);
-        intent.putExtra("taskListId",(long)taskList_id);
+        Intent intent = new Intent(CreateNewList.this, AddNewitem.class);
+        intent.putExtra("taskListId", (long) taskList_id);
         startActivityForResult(intent, REQUEST_CODE);
         writeItems();
 
@@ -194,7 +199,7 @@ public class CreateNewList extends AppCompatActivity {
     public void saveAndFinish(){
         mTaskListName = inputTaskName.getText().toString();
         mtaskList.setListName(mTaskListName);
-        todoDao.saveList(mtaskList);
+        //update taskName here
         finish();
     }
 }

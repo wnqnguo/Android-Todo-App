@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#dbdbda">
+    >
 
     <ImageButton
         android:id="@+id/parent_list_item_remove"
@@ -11,7 +11,8 @@
         android:layout_alignParentLeft="true"
         android:layout_margin="8dp"
 
-        android:src="@drawable/ic_action_remove" />
+        android:src="@drawable/ic_action_remove"
+        android:background="@null" />
     <TextView
         android:id="@+id/parent_list_item_name"
         android:layout_width="wrap_content"
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
+        android:background="@null"
         android:src="@drawable/ic_action_expand" />
 
 </RelativeLayout>

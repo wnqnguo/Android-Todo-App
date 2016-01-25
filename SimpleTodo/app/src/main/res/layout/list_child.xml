@@ -1,21 +1,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#cbcbcb">
+    android:id="@+id/child_list"
+    android:paddingLeft="10dp"
+    >
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/child_list_item_priority"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/child_list_item_name"
+        android:layout_toStartOf="@+id/child_list_item_name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/child_list_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Task Name" />
-
+        android:text="Task Name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:foregroundGravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="5" />
     <CheckBox
         android:id="@+id/child_list_item_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Done"
+        android:foregroundGravity="center_horizontal"
+        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="8dp"
-        android:text="Done" />
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

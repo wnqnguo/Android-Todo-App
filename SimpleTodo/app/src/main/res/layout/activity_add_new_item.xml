@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.codepath.simpletodo.Activities.EditItemActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/linearLayout2"
+        android:layout_marginTop="50dp"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task Name"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_name"
+                android:hint="Enter Task Name"
+                android:phoneNumber="false" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due Date"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_due_date"
+
+                android:hint="Set Due Date" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task Notes"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter Task Name"
+                android:id="@+id/task_notes" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Priority Level"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:layout_width="138dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_priority_level" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:layout_width="171dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_status"
+                android:layout_alignBottom="@+id/linearLayout2"
+                android:layout_alignRight="@+id/linearLayout2"
+                android:layout_alignEnd="@+id/linearLayout2"
+                android:paddingLeft="70dp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

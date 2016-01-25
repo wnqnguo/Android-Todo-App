@@ -25,4 +25,6 @@
     <string name="title_home">Home</string>
     <string name="title_activity_edit_item">EditItemActivity</string>
     <string name="title_activity_create_list">CreateList</string>
+    <string name="title_activity_add_newitem">AddNewitem</string>
+    <string name="title_activity_edit_list">EditListActivity</string>
 </resources>

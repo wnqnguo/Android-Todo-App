@@ -27,8 +27,8 @@ public class Task {
         return TaskName;
     }
 
-    public void setTaskName(String TaskName) {
-        TaskName = TaskName;
+    public void setTaskName(String name) {
+        TaskName = name;
     }
 
     public String getDueDate() {

@@ -11,30 +11,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
-import java.util.ArrayList;
-import java.util.Calendar;
+import android.widget.Spinner;
 
 import com.codepath.simpletodo.Database.TodoDao;
 import com.codepath.simpletodo.Models.Task;
 import com.codepath.simpletodo.R;
-import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class EditItemActivity extends AppCompatActivity {
+public class AddNewitem extends AppCompatActivity {
 
-    String mItemName;
     int mItemPosition;
     private final int REQUEST_CODE = 20;
     private Toolbar mToolbar;
-
+    private Task testTask;
     private ImageButton mSave;
     private TodoDao todoDao;
     private String mTaskName;
@@ -46,42 +41,39 @@ public class EditItemActivity extends AppCompatActivity {
     private EditText edDueDate;
     private EditText edPriorityLevel;
     private EditText edNotes;
-
+    private EditText edCompleted;
     private long taskList_id;
-    private long task_id;
+    String mItemName;
     private Spinner mStatus, mPriority;
     List Status,Priority;
-    private ImageButton mDelete;
-    private Task mTask;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_item);
-        Intent intent = getIntent();
-
-        taskList_id = intent.getLongExtra("taskListid",0);
-        task_id = intent.getLongExtra("taskId",0);
+        setContentView(R.layout.activity_add_new_item);
+       // mToolbar = findViewById(R.id.toolbar_item);
         Status = new ArrayList();
         Priority = new ArrayList();
+        Intent intent = getIntent();
+        taskList_id = intent.getLongExtra("taskListId", 2);
         mItemName = getIntent().getStringExtra("item_name");
         mItemPosition = getIntent().getIntExtra("item_pos", 0);
         todoDao = new TodoDao(this);
         edTaskName = (EditText)findViewById(R.id.task_name);
-        mDelete = (ImageButton)findViewById(R.id.task_delete);
-        mTask = todoDao.getTaskById(task_id);
-
+        // edDueDate = (EditText)findViewById(R.id.task_due_date);
+        mSave = (ImageButton)findViewById(R.id.save);
         edNotes = (EditText)findViewById(R.id.task_notes);
         edDueDate = (EditText)findViewById(R.id.task_due_date);
         mStatus = (Spinner)findViewById(R.id.task_status);
         mPriority = (Spinner)findViewById(R.id.task_priority_level);
         Status.add("TO-DO");
         Status.add("DONE");
+
         Priority.add("LOW");
         Priority.add("MEDIUM");
         Priority.add("HIGH");
-
+        mPriority.setSelection(0);
+        mStatus.setSelection(0);
         ArrayAdapter statusAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Status);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mStatus.setAdapter(statusAdapter);
@@ -89,23 +81,10 @@ public class EditItemActivity extends AppCompatActivity {
         ArrayAdapter priorityAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Priority);
         priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mPriority.setAdapter(priorityAdapter);
-        setInitialView();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_item);
-        mSave = (ImageButton) findViewById(R.id.save);
-        TodoDao tdDao = new TodoDao(EditItemActivity.this);
-
-        setSupportActionBar(mToolbar);
-
-        mSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveNewItem();
-                finish();
-            }
-        });
         edDueDate.setOnClickListener(new View.OnClickListener() {
-            final Calendar cal =  Calendar.getInstance();
+            final Calendar cal = Calendar.getInstance();
+
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePicker = new DatePickerDialog(v.getContext(),
@@ -118,11 +97,11 @@ public class EditItemActivity extends AppCompatActivity {
                 datePicker.show();
             }
         });
-
-        mDelete.setOnClickListener(new View.OnClickListener() {
+        mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WarningDialog();
+                saveNewItem();
+
             }
         });
     }
@@ -130,7 +109,7 @@ public class EditItemActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit_item, menu);
+        getMenuInflater().inflate(R.menu.menu_add_new_item, menu);
         return true;
     }
 
@@ -148,30 +127,6 @@ public class EditItemActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void saveNewItem(){
-       // Task mTask = new Task();
-        String temp = edTaskName.getText().toString();
-        mTask.setTaskName(temp);
-        mTask.setDueDate(edDueDate.getText().toString());
-        mTask.setPriorityLevel(String.valueOf(mPriority.getSelectedItem()));
-        mTask.setNotes(edNotes.getText().toString());
-        mTask.setListId(taskList_id);
-
-        if(temp == null||temp.isEmpty()){
-            NameDialog();
-        }else{
-            todoDao.addTaskToList(mTask);
-            goBackToList();
-            finish();
-        }
-        }
-        //mTask.setCompleted(edTaskName.getText().toString());
-
-    private void showDate(int year, int month, int day) {
-        edDueDate.setText(new StringBuilder().append(day).append("/")
-                .append(month).append("/").append(year));
-    }
-    // Listener
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
         // when dialog box is closed, below method will be called.
@@ -201,49 +156,22 @@ public class EditItemActivity extends AppCompatActivity {
         AlertDialog alertDialog1 = alertDialogBuilder.create();
         alertDialog1.show();
     }
-    public void WarningDialog(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure you want to delete this task?");
+    public void saveNewItem(){
+        Task mTask = new Task();
+        String temp = edTaskName.getText().toString();
+        mTask.setTaskName(temp);
+        mTask.setDueDate(edDueDate.getText().toString());
+        mTask.setPriorityLevel(String.valueOf(mPriority.getSelectedItem()));
+        mTask.setNotes(edNotes.getText().toString());
+        mTask.setListId(taskList_id);
 
-        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                todoDao.removeTaskFromList(task_id);
-//               Intent intent = new Intent(v.getContext(), MainActivity.class);
-//                intent.putExtra("taskListid", mTaskListId);
-                finish();
-
-            }
-        });
-
-
-        AlertDialog alertDialog2 = alertDialogBuilder.create();
-        alertDialog2.show();
-    }
-    public void setInitialView(){
-        edTaskName.setText(mTask.getTaskName());
-        edDueDate.setText(mTask.getDueDate());
-        if(mTask.getNotes()!=null){
-            edNotes.setText(mTask.getNotes());
-        }
-        if(mTask.isCompleted()==0){
-            mStatus.setSelection(0);
+        if(temp == null||temp.isEmpty()){
+            NameDialog();
         }else{
-            mStatus.setSelection(1);
+            todoDao.addTaskToList(mTask);
+            finish();
         }
-        if(mTask.getPriorityLevel().equals("LOW")){
-            mPriority.setSelection(0);
-        }else if(mTask.getPriorityLevel().equals("MEDIUM")){
-            mPriority.setSelection(1);
-        }else if(mTask.getPriorityLevel().equals("HIGH")){
-            mPriority.setSelection(2);
-        }else{
+        //mTask.setCompleted(edTaskName.getText().toString());
 
-        }
-    }
-    public void goBackToList(){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("taskListid", taskList_id);
-        startActivity(intent);
     }
 }

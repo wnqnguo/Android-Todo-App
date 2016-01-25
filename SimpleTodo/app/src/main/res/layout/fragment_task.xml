@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <EditText
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/parent_list_item_remove"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/task_name"
-        style="?android:listSeparatorTextViewStyle"/>
+        android:layout_alignParentLeft="true"
+        android:layout_margin="8dp"
 
-
+        android:src="@drawable/ic_action_remove" />
 
     <CheckBox
         android:id="@+id/task_completed"
@@ -20,5 +20,12 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/task_completed_label"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/task_name"
+        style="?android:listSeparatorTextViewStyle"/>
+
 
 </LinearLayout>

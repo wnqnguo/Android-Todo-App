@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
+    android:id="@+id/toolbar_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
@@ -13,8 +13,8 @@
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
     android:layout_margin="8dp"
-    android:id="@+id/add"
-    android:src="@drawable/ic_action_add"
+    android:id="@+id/task_delete"
+    android:src="@drawable/ic_action_delete"
     android:background="@null"
     android:layout_gravity="right"
     />

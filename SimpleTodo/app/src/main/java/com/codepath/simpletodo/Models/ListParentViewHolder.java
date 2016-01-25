@@ -49,9 +49,12 @@ public class ListParentViewHolder extends ParentViewHolder {
                 intent.putExtra("taskListId",(long)taskListId);
                 v.getContext().startActivity(intent);
 
+
             }
         });
-
+        if(taskListId>0){
+            expandView();
+        }
 
 
 

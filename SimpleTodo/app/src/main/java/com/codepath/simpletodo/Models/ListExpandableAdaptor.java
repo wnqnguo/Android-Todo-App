@@ -21,8 +21,10 @@ import java.util.List;
  */
 public class ListExpandableAdaptor extends ExpandableRecyclerAdapter<ListParentViewHolder, ListChildViewHolder>{
     private LayoutInflater mInflater;
+    public long mTaskListId;
     public ListExpandableAdaptor(Context context, List<ParentListItem> list){
         super(list);
+        mTaskListId = 0;
         mInflater = LayoutInflater.from(context);
     }
     @Override
@@ -40,6 +42,10 @@ public class ListExpandableAdaptor extends ExpandableRecyclerAdapter<ListParentV
         TaskList list = (TaskList) parentListItem;
         listParentViewHolder.mListName.setText(list.getListName());
         listParentViewHolder.setTaskListId(list.getId());
+        if(list.getId()==mTaskListId){
+            expandParent((int)mTaskListId);
+
+        }
     }
     @Override
     public void onBindChildViewHolder(ListChildViewHolder listhildViewHolder, int i, Object childObject) {
@@ -54,8 +60,29 @@ public class ListExpandableAdaptor extends ExpandableRecyclerAdapter<ListParentV
             if(task.isCompleted()==1){
                 listhildViewHolder.mTaskComplete.setChecked(true);
             }
+            if(task.getPriorityLevel() != null){
+                listhildViewHolder.mTaskPriority.setText(task.getPriorityLevel());
+                String priority = task.getPriorityLevel();
+                if(priority!=null){
+                    if(priority.equals("LOW")){
+                        listhildViewHolder.mTaskPriority.setBackgroundResource(R.color.green);
+                    }else if(priority.equals("MEDIUM")){
+                        listhildViewHolder.mTaskPriority.setBackgroundResource(R.color.yellow);
+                    }else if(priority.equals("HIGH")){
+                        listhildViewHolder.mTaskPriority.setBackgroundResource(R.color.red);
+                    }else{
+
+                    }
+                }
+            }
+          listhildViewHolder.mTaskId = task.getId();
+          listhildViewHolder.mTaskListId = task.getListId();
+
+
+
         }else{
             // listhildViewHolder.mTaskName.setText("");
+
         }
 
     }
